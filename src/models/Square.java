@@ -1,4 +1,6 @@
+package models;
 
+import models.Board;
 
 import java.awt.Color;
 import java.awt.Graphics;
