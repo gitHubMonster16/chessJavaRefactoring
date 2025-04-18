@@ -40,23 +40,15 @@ public class GameWindow {
         } catch (Exception e) {
             System.out.println("controllers.Game file wp.png not found");
         }
-
         gameWindow.setLocation(100, 100);
-        
-        
         gameWindow.setLayout(new BorderLayout(20,20));
-       
         // controllers.Game Data window
         JPanel gameData = gameDataPanel(blackName, whiteName, hh, mm, ss);
         gameData.setSize(gameData.getPreferredSize());
         gameWindow.add(gameData, BorderLayout.NORTH);
-        
         this.board = new Board(this);
-        
         gameWindow.add(board, BorderLayout.CENTER);
-        
         gameWindow.add(buttons(), BorderLayout.SOUTH);
-        
         gameWindow.setMinimumSize(gameWindow.getPreferredSize());
         gameWindow.setSize(gameWindow.getPreferredSize());
         gameWindow.setResizable(false);
@@ -70,16 +62,12 @@ public class GameWindow {
     
     private JPanel gameDataPanel(final String bn, final String wn, 
             final int hh, final int mm, final int ss) {
-        
         JPanel gameData = new JPanel();
         gameData.setLayout(new GridLayout(3,2,0,0));
-        
-        
         // PLAYER NAMES
-        
         JLabel w = new JLabel(wn);
         JLabel b = new JLabel(bn);
-        
+
         w.setHorizontalAlignment(JLabel.CENTER);
         w.setVerticalAlignment(JLabel.CENTER);
         b.setHorizontalAlignment(JLabel.CENTER);

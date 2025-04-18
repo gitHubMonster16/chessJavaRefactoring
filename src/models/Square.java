@@ -1,6 +1,8 @@
 package models;
 
+import PaintComponents.SquarePaintComponent;
 import models.Board;
+import models.enums.Color_Piece;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,14 +13,14 @@ import javax.swing.*;
 public class Square extends JComponent {
     private Board b;
     
-    private final int color;
+    private final Color_Piece  color;
     private Piece occupyingPiece;
     private boolean dispPiece;
     
     private int xNum;
     private int yNum;
     
-    public Square(Board b, int c, int xNum, int yNum) {
+    public Square(Board b, Color_Piece c, int xNum, int yNum) {
         
         this.b = b;
         this.color = c;
@@ -29,11 +31,9 @@ public class Square extends JComponent {
         
         this.setBorder(BorderFactory.createEmptyBorder());
     }
-    
-    public int getColor() {
-        return this.color;
+    public boolean getDispPiece(){
+        return this.dispPiece;
     }
-    
     public Piece getOccupyingPiece() {
         return occupyingPiece;
     }
@@ -49,11 +49,15 @@ public class Square extends JComponent {
     public int getYNum() {
         return this.yNum;
     }
-    
+
+
+    public Color_Piece getColor() {
+        return color;
+    }
+
     public void setDisplay(boolean v) {
         this.dispPiece = v;
     }
-    
     public void put(Piece p) {
         this.occupyingPiece = p;
         p.setPosition(this);
@@ -67,24 +71,23 @@ public class Square extends JComponent {
     
     public void capture(Piece p) {
         Piece k = getOccupyingPiece();
-        if (k.getColor() == 0) b.Bpieces.remove(k);
-        if (k.getColor() == 1) b.Wpieces.remove(k);
+        if (k.getColor() == Color_Piece.BLACK) b.Bpieces.remove(k);
+        if (k.getColor() == Color_Piece.WHITE) b.Wpieces.remove(k);
         this.occupyingPiece = p;
     }
-    
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        if (this.color == 1) {
+
+        if (this.getColor() == Color_Piece.WHITE) {
             g.setColor(new Color(221,192,127));
         } else {
             g.setColor(new Color(101,67,33));
         }
-        
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-        
-        if(occupyingPiece != null && dispPiece) {
-            occupyingPiece.draw(g);
+
+        if(this.getOccupyingPiece() != null && this.getDispPiece()) {
+            this.getOccupyingPiece().draw(g);
         }
     }
     

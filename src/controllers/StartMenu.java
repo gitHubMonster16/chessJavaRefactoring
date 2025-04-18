@@ -47,17 +47,12 @@ public class StartMenu implements Runnable {
         } catch (Exception e) {
             System.out.println("Required game file bp.png missing");
         }
-        
-        
-        
         final JTextField blackInput = new JTextField("Black", 10);
         blackPanel.add(blackInput);
-        
         // White player selections
         final JPanel whitePanel = new JPanel();
         components.add(whitePanel);
         final JLabel whitePiece = new JLabel();
-        
         try {
             Image whiteImg = ImageIO.read(getClass().getResource("/resources/wp.png"));
             whitePiece.setIcon(new ImageIcon(whiteImg));

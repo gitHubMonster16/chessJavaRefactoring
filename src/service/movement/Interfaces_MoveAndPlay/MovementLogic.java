@@ -6,5 +6,5 @@ import models.Square;
 import java.util.List;
 
 public interface MovementLogic {
-    List<Square> getLegalMoves(Board board);
+     List<Square> getLegalMoves(Board board);
 }

@@ -5,32 +5,39 @@ import models.Piece;
 import models.Square;
 import service.movement.Interfaces_MoveAndPlay.MovementLogic;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StandardKnightMovement implements MovementLogic {
-    public final Piece knight;
-    public final int[][] directions={{-2,-1},{-2,1},{-1,-2},{-1,2},{1,2},{1,-2},{2,-1},{2,1}};
-    public StandardKnightMovement(Piece piece){
-        this.knight=piece;
+    private static final int[][] KNIGHT_MOVES = {
+            {-2, -1}, {-2, 1},
+            {-1, -2}, {-1, 2},
+            {1, -2}, {1, 2},
+            {2, -1}, {2, 1}
+    };
+    private final Piece knight;
+    public StandardKnightMovement(Piece piece) {
+        this.knight = piece;
     }
-
     @Override
     public List<Square> getLegalMoves(Board chessBoard) {
-        LinkedList<Square> legalMoves = new LinkedList<Square>();
+        List<Square> legalMoves = new ArrayList<>();
         Square[][] board = chessBoard.getSquareArray();
-        int x = this.knight.getPosition().getX();
-        int y = this.knight.getPosition().getY();
-        for(int[] direction:directions){
-            try {
-                if (!board[y + direction[0]][x + direction[1]].isOccupied() ||
-                        board[y + direction[0]][x + direction[1]].getOccupyingPiece().getColor()
-                                != knight.getColor()) {
-                    legalMoves.add(board[y + direction[0]][x + direction[1]]);
+        int x = knight.getPosition().getXNum();
+        int y = knight.getPosition().getYNum();
+        for (int[] move : KNIGHT_MOVES) {
+            int newY = y + move[0]; // Note: y first for row
+            int newX = x + move[1]; // x second for column
+
+            // Check if move is within board bounds
+            if (newX >= 0 && newX < 8 && newY >= 0 && newY < 8) {
+                Square targetSquare = board[newY][newX]; // Access as board[y][x]
+
+                // Square is empty or contains opponent's piece
+                if (!targetSquare.isOccupied() ||
+                        targetSquare.getOccupyingPiece().getColor() != knight.getColor()) {
+                    legalMoves.add(targetSquare);
                 }
-            }
-            catch(ArrayIndexOutOfBoundsException e) {
-                continue;
             }
         }
         return legalMoves;

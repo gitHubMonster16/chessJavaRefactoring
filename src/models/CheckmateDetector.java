@@ -2,6 +2,7 @@ package models;
 
 import models.Bishop;
 import models.King;
+import models.enums.Color_Piece;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -437,21 +438,19 @@ public class CheckmateDetector {
      */
     public boolean testMove(Piece p, Square sq) {
         Piece c = sq.getOccupyingPiece();
-        
+
         boolean movetest = true;
         Square init = p.getPosition();
-        
+
         p.move(sq);
         update();
-        
-        if (p.getColor() == 0 && blackInCheck()) movetest = false;
-        else if (p.getColor() == 1 && whiteInCheck()) movetest = false;
-        
+
+        if (p.getColor() == Color_Piece.BLACK && blackInCheck()) movetest = false;
+        else if (p.getColor() ==Color_Piece.WHITE && whiteInCheck()) movetest = false;
+
         p.move(init);
         if (c != null) sq.put(c);
-        
         update();
-        
         movableSquares.addAll(squares);
         return movetest;
     }
