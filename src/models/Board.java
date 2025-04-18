@@ -2,9 +2,9 @@ package models;
 
 
 
-import PaintComponents.SquarePaintComponent;
 import controllers.GameWindow;
 import models.enums.Color_Piece;
+import service.checkmateDetector.CheckmateDetector;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,8 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.*;
-
-import static com.sun.tools.javac.main.Option.G;
 
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
@@ -165,7 +163,6 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 //        }
 //        square.setOccupyingPiece(capturingPiece);
     }
-
     @Override
     public void paintComponent(Graphics g) {
         // super.paintComponent(g);
