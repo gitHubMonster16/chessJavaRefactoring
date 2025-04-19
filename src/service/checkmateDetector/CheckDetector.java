@@ -57,11 +57,9 @@ public class CheckDetector {
         return isWhite ? !blackAttacks.get(kingSquare).isEmpty()
                 : !whiteAttacks.get(kingSquare).isEmpty();
     }
-
     public Map<Square, List<Piece>> getWhiteAttacks() {
         return Collections.unmodifiableMap(whiteAttacks);
     }
-
     public Map<Square, List<Piece>> getBlackAttacks() {
         return Collections.unmodifiableMap(blackAttacks);
     }
