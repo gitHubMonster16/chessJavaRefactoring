@@ -3,13 +3,10 @@ package service.movement.handler;
 import models.Board;
 import models.Piece;
 import models.Square;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MovementHandle {
-    // Made directions arrays for better memory efficiency
     private static final int[][] HORIZONTAL_VERTICAL = {
             {-1, 0}, {1, 0}, {0, -1}, {0, 1}
     };
@@ -52,7 +49,6 @@ public class MovementHandle {
         for (int[] direction : HORIZONTAL_VERTICAL) {
             int currentX = x + direction[0];
             int currentY = y + direction[1];
-
             while (isValidPosition(currentX, currentY)) {
                 Square target = currentBoard[currentY][currentX];
                 if (target.isOccupied()) {
@@ -68,7 +64,6 @@ public class MovementHandle {
         }
         return legalMoves;
     }
-
     public static List<Square> getCombinedMoves(Board chessBoard, Piece piece) {
         // Pre-allocate with approximate capacity (28 = 14 straight + 14 diagonal)
         List<Square> moves = new ArrayList<>(28);
@@ -77,7 +72,7 @@ public class MovementHandle {
         return moves;
     }
 
-    private static boolean isValidPosition(int x, int y) {
+    public static boolean isValidPosition(int x, int y) {
         return x >= 0 && y >= 0 && x < 8 && y < 8;
     }
 }

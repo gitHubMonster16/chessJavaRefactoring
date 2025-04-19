@@ -1,16 +1,13 @@
 package models;
 
-import PaintComponents.SquarePaintComponent;
-import models.Board;
 import models.enums.Color_Piece;
 
-import java.awt.Color;
-import java.awt.Graphics;
-
 import javax.swing.*;
+import java.awt.*;
 
 @SuppressWarnings("serial")
 public class Square extends JComponent {
+    private  Position position;
     private Board b;
     
     private final Color_Piece  color;
@@ -21,14 +18,12 @@ public class Square extends JComponent {
     private int yNum;
     
     public Square(Board b, Color_Piece c, int xNum, int yNum) {
-        
         this.b = b;
         this.color = c;
         this.dispPiece = true;
         this.xNum = xNum;
         this.yNum = yNum;
-        
-        
+        this.position = new Position(xNum, yNum);
         this.setBorder(BorderFactory.createEmptyBorder());
     }
     public boolean getDispPiece(){
@@ -50,6 +45,9 @@ public class Square extends JComponent {
         return this.yNum;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
     public Color_Piece getColor() {
         return color;
@@ -58,6 +56,11 @@ public class Square extends JComponent {
     public void setDisplay(boolean v) {
         this.dispPiece = v;
     }
+
+    public void setOccupyingPiece(Piece occupyingPiece) {
+        this.occupyingPiece = occupyingPiece;
+    }
+
     public void put(Piece p) {
         this.occupyingPiece = p;
         p.setPosition(this);

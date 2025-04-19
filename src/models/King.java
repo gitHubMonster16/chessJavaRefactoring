@@ -8,6 +8,8 @@ import java.util.List;
 
 public class King extends Piece {
 
+
+
     public King(Color_Piece color, Square initSq, String img_file) {
         super(color, initSq, img_file);
     }

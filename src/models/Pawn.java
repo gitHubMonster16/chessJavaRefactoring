@@ -1,6 +1,8 @@
 package models;
 
 import models.enums.Color_Piece;
+import service.movement.PlayMove.PlayMoveLogic;
+import service.movement.PlayMove.StandardPlayMove;
 import service.movement.StandardPawnMovement;
 
 import java.util.List;
@@ -12,7 +14,9 @@ public class Pawn extends Piece {
         super(color, initSq, img_file);
         this.wasMoved=false;
     }
-    
+    protected PlayMoveLogic getMoveExecutorStrategy() {
+        return new StandardPlayMove(this);
+    }
     @Override
     public boolean move(Square fin) {
         boolean b = super.move(fin);

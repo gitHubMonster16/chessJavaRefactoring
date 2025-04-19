@@ -19,6 +19,8 @@ import java.util.List;
 
 import javax.swing.*;
 
+import static models.enums.Color_Piece.BLACK;
+
 @SuppressWarnings("serial")
 public class Board extends JPanel implements MouseListener, MouseMotionListener {
 	// Resource location constants for piece images
@@ -71,7 +73,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
                     board[x][y] = new Square(this, Color_Piece.WHITE, y, x);
                     this.add(board[x][y]);
                 } else {
-                    board[x][y] = new Square(this, Color_Piece.BLACK, y, x);
+                    board[x][y] = new Square(this, BLACK, y, x);
                     this.add(board[x][y]);
                 }
             }
@@ -96,36 +98,44 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         return currY;
     }
 
+    public LinkedList<Piece> getBpieces() {
+        return Bpieces;
+    }
+
+    public LinkedList<Piece> getWpieces() {
+        return Wpieces;
+    }
+
     public boolean getWhiteTurn(){
           return this.whiteTurn;
     }
     private void initializePieces() {
     	
         for (int x = 0; x < 8; x++) {
-            board[1][x].put(new Pawn(Color_Piece.BLACK, board[1][x], RESOURCES_BPAWN_PNG));
+            board[1][x].put(new Pawn(BLACK, board[1][x], RESOURCES_BPAWN_PNG));
             board[6][x].put(new Pawn(Color_Piece.WHITE, board[6][x], RESOURCES_WPAWN_PNG));
         }
         
         board[7][3].put(new Queen(Color_Piece.WHITE, board[7][3], RESOURCES_WQUEEN_PNG));
-        board[0][3].put(new Queen(Color_Piece.BLACK, board[0][3], RESOURCES_BQUEEN_PNG));
+        board[0][3].put(new Queen(BLACK, board[0][3], RESOURCES_BQUEEN_PNG));
         
-        King bk = new King(Color_Piece.BLACK, board[0][4], RESOURCES_BKING_PNG);
+        King bk = new King(BLACK, board[0][4], RESOURCES_BKING_PNG);
         King wk = new King(Color_Piece.WHITE, board[7][4], RESOURCES_WKING_PNG);
         board[0][4].put(bk);
         board[7][4].put(wk);
 
-        board[0][0].put(new Rook(Color_Piece.BLACK, board[0][0], RESOURCES_BROOK_PNG));
-        board[0][7].put(new Rook(Color_Piece.BLACK, board[0][7], RESOURCES_BROOK_PNG));
+        board[0][0].put(new Rook(BLACK, board[0][0], RESOURCES_BROOK_PNG));
+        board[0][7].put(new Rook(BLACK, board[0][7], RESOURCES_BROOK_PNG));
         board[7][0].put(new Rook(Color_Piece.WHITE, board[7][0], RESOURCES_WROOK_PNG));
         board[7][7].put(new Rook(Color_Piece.WHITE, board[7][7], RESOURCES_WROOK_PNG));
 
-        board[0][1].put(new Knight(Color_Piece.BLACK, board[0][1], RESOURCES_BKNIGHT_PNG));
-        board[0][6].put(new Knight(Color_Piece.BLACK, board[0][6], RESOURCES_BKNIGHT_PNG));
+        board[0][1].put(new Knight(BLACK, board[0][1], RESOURCES_BKNIGHT_PNG));
+        board[0][6].put(new Knight(BLACK, board[0][6], RESOURCES_BKNIGHT_PNG));
         board[7][1].put(new Knight(Color_Piece.WHITE, board[7][1], RESOURCES_WKNIGHT_PNG));
         board[7][6].put(new Knight(Color_Piece.WHITE, board[7][6], RESOURCES_WKNIGHT_PNG));
 
-        board[0][2].put(new Bishop(Color_Piece.BLACK, board[0][2], RESOURCES_BBISHOP_PNG));
-        board[0][5].put(new Bishop(Color_Piece.BLACK, board[0][5], RESOURCES_BBISHOP_PNG));
+        board[0][2].put(new Bishop(BLACK, board[0][2], RESOURCES_BBISHOP_PNG));
+        board[0][5].put(new Bishop(BLACK, board[0][5], RESOURCES_BBISHOP_PNG));
         board[7][2].put(new Bishop(Color_Piece.WHITE, board[7][2], RESOURCES_WBISHOP_PNG));
         board[7][5].put(new Bishop(Color_Piece.WHITE, board[7][5], RESOURCES_WBISHOP_PNG));
         
@@ -155,13 +165,29 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public Piece getCurrPiece() {
         return this.currPiece;
     }
+
+    public Square getSquare(String notation) {
+        if (notation.length() != 2) {
+            throw new IllegalArgumentException("Invalid square notation: " + notation);
+        }
+        char file = notation.charAt(0);
+        char rank = notation.charAt(1);
+        int x = file - 'a';
+        int y = 8 - Character.getNumericValue(rank); // e.g. '2' = 6
+
+        if (x < 0 || x >= 8 || y < 0 || y >= 8) {
+            throw new IllegalArgumentException("Invalid square position: " + notation);
+        }
+
+        return board[y][x];
+    }
     public void capturePiece(Square square, Piece capturingPiece) {
-//        Piece capturedPiece = square.getOccupyingPiece();
-//        if (capturedPiece != null) {
-//            if (capturedPiece.getColor() == PieceColor.BLACK) blackPieces.remove(capturedPiece);
-//            else Wpieces.remove(capturedPiece);
-//        }
-//        square.setOccupyingPiece(capturingPiece);
+        Piece capturedPiece = square.getOccupyingPiece();
+        if (capturedPiece != null) {
+            if (capturedPiece.getColor() == BLACK) Bpieces.remove(capturedPiece);
+            else Wpieces.remove(capturedPiece);
+        }
+        square.setOccupyingPiece(capturingPiece);
     }
     @Override
     public void paintComponent(Graphics g) {
@@ -176,7 +202,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         if (currPiece != null) {
             if ((currPiece.getColor() == Color_Piece.WHITE && whiteTurn)
-                    || (currPiece.getColor() == Color_Piece.BLACK && !whiteTurn)) {
+                    || (currPiece.getColor() == BLACK && !whiteTurn)) {
                 final Image i = currPiece.getImage();
                 g.drawImage(i, currX, currY, null);
             }
@@ -192,7 +218,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
         if (sq.isOccupied()) {
             currPiece = sq.getOccupyingPiece();
-            if (currPiece.getColor() == Color_Piece.BLACK && whiteTurn)
+            if (currPiece.getColor() == BLACK && whiteTurn)
                 return;
             if (currPiece.getColor() == Color_Piece.WHITE && !whiteTurn)
                 return;
@@ -206,7 +232,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
         Square sq = (Square) this.getComponentAt(new Point(e.getX(), e.getY()));
 
         if (currPiece != null) {
-            if (currPiece.getColor() == Color_Piece.BLACK && whiteTurn)
+            if (currPiece.getColor() == BLACK && whiteTurn)
                 return;
             if (currPiece.getColor() == Color_Piece.WHITE && !whiteTurn)
                 return;

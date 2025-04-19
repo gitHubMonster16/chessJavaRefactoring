@@ -1,4 +1,4 @@
-package service.movement.Interfaces_MoveAndPlay;
+package service.movement.PlayMove;
 
 import models.Board;
 import models.Square;
