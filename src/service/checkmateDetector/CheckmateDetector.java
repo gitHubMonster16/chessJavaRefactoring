@@ -493,6 +493,14 @@ public class CheckmateDetector {
         update();
     }
 
+    public Map<Square, List<Piece>> getBlackAttacks() {
+        return blackAttacks;
+    }
+
+    public Map<Square, List<Piece>> getWhiteAttacks() {
+        return whiteAttacks;
+    }
+
     private void initializeAttackMaps() {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
@@ -556,12 +564,12 @@ public class CheckmateDetector {
                 !canBlockThreat(king, opponentAttacks.get(king.getPosition()), allyAttacks);
     }
 
-    private boolean canKingEvade(King king, Map<Square, List<Piece>> opponentAttacks) {
+    public boolean canKingEvade(King king, Map<Square, List<Piece>> opponentAttacks) {
         return king.getLegalMoves(board).stream()
                 .anyMatch(sq -> opponentAttacks.get(sq).isEmpty() && testMove(king, sq));
     }
 
-    private boolean canCaptureThreat(King king, List<Piece> threats,
+    public boolean canCaptureThreat(King king, List<Piece> threats,
                                      Map<Square, List<Piece>> allyAttacks) {
         if (threats.size() != 1) return false;
 
@@ -578,7 +586,7 @@ public class CheckmateDetector {
         return false;
     }
 
-    private boolean canBlockThreat(King king, List<Piece> threats,
+    public boolean canBlockThreat(King king, List<Piece> threats,
                                    Map<Square, List<Piece>> allyAttacks) {
         if (threats.size() != 1) return false;
 
@@ -594,7 +602,7 @@ public class CheckmateDetector {
                         .anyMatch(p -> testMove(p, sq)));
     }
 
-    private List<Square> getSquaresBetween(Square start, Square end) {
+    public List<Square> getSquaresBetween(Square start, Square end) {
         List<Square> squares = new ArrayList<>();
         int x1 = start.getXNum(), y1 = start.getYNum();
         int x2 = end.getXNum(), y2 = end.getYNum();

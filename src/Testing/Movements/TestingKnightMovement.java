@@ -1,4 +1,4 @@
-package Testing;
+package Testing.Movements;
 
 import models.*;
 import models.enums.Color_Piece;

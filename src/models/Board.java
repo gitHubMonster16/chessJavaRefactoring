@@ -109,7 +109,7 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
     public boolean getWhiteTurn(){
           return this.whiteTurn;
     }
-    private void initializePieces() {
+    public void initializePieces() {
     	
         for (int x = 0; x < 8; x++) {
             board[1][x].put(new Pawn(BLACK, board[1][x], RESOURCES_BPAWN_PNG));
@@ -156,6 +156,9 @@ public class Board extends JPanel implements MouseListener, MouseMotionListener 
 
     public boolean getTurn() {
         return whiteTurn;
+    }
+    public Square getSquare(int x,int y){
+        return board[y][x];
     }
 
     public void setCurrPiece(Piece p) {

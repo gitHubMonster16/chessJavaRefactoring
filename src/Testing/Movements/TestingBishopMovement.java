@@ -1,4 +1,4 @@
-package Testing;
+package Testing.Movements;
 
 import models.Bishop;
 import models.Board;

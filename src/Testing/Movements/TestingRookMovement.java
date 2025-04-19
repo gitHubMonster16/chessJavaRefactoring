@@ -1,4 +1,4 @@
-package Testing;
+package Testing.Movements;
 
 import models.Board;
 import models.Rook;
