@@ -14,8 +14,8 @@ public class PieceDraw extends JComponent {
         this.img = piece.getImage();  // Assumes image is already loaded
     }
 
-    public void draw(Graphics g, int width, int height) {
+    public void draw(Graphics g,int x,int y) {
         // Draw the image scaled to the full square size
-        g.drawImage(img, 0, 0, width, height, null);
+        g.drawImage(img, x, y,null);
     }
 }

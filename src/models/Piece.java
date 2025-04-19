@@ -1,5 +1,6 @@
 package models;
 
+import PaintComponents.PieceDraw;
 import models.enums.Color_Piece;
 
 import service.movement.PlayMove.PlayMoveLogic;
@@ -71,16 +72,7 @@ public abstract class Piece {
     public Image getImage() {
         return img;
     }
-    
-    public void draw(Graphics g) {
-        int x = currentSquare.getX();
-        int y = currentSquare.getY();
-        
-        g.drawImage(this.img, x, y, null);
-    }
 
-
-    // No implementation, to be implemented by each subclass
     public abstract List<Square> getLegalMoves(Board b);
 
     public static void main(String[] args) throws IOException {

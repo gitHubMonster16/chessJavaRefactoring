@@ -1,5 +1,7 @@
 package models;
 
+import PaintComponents.PieceDraw;
+import PaintComponents.SquarePaintComponent;
 import models.enums.Color_Piece;
 
 import javax.swing.*;
@@ -9,14 +11,13 @@ import java.awt.*;
 public class Square extends JComponent {
     private  Position position;
     private Board b;
-    
+    private SquarePaintComponent paintComponent;
     private final Color_Piece  color;
     private Piece occupyingPiece;
     private boolean dispPiece;
     
     private int xNum;
     private int yNum;
-    
     public Square(Board b, Color_Piece c, int xNum, int yNum) {
         this.b = b;
         this.color = c;
@@ -24,6 +25,7 @@ public class Square extends JComponent {
         this.xNum = xNum;
         this.yNum = yNum;
         this.position = new Position(xNum, yNum);
+        this.paintComponent=new SquarePaintComponent(this);
         this.setBorder(BorderFactory.createEmptyBorder());
     }
     public boolean getDispPiece(){
@@ -47,6 +49,10 @@ public class Square extends JComponent {
 
     public Position getPosition() {
         return position;
+    }
+
+    public Board getB() {
+        return b;
     }
 
     public Color_Piece getColor() {
@@ -78,7 +84,7 @@ public class Square extends JComponent {
         if (k.getColor() == Color_Piece.WHITE) b.Wpieces.remove(k);
         this.occupyingPiece = p;
     }
-
+    @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -90,10 +96,9 @@ public class Square extends JComponent {
         g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
 
         if(this.getOccupyingPiece() != null && this.getDispPiece()) {
-            this.getOccupyingPiece().draw(g);
+            new PieceDraw(this.getOccupyingPiece()).draw(g,this.getX(),this.getY());
         }
     }
-    
     @Override
     public int hashCode() {
         int prime = 31;

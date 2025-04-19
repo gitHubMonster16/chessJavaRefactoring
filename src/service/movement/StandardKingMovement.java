@@ -82,12 +82,10 @@ public class StandardKingMovement implements MovementLogic {
 
         Square rookSquare = board.getSquare(rookPos);
         Piece rook = rookSquare.getOccupyingPiece();
-
         // Check rook exists, hasn't moved, and is correct type
         if (rook == null || !(rook instanceof Rook) || rook.isHasMoved) {
             return false;
         }
-
         // Check path is clear
         for (String square : betweenSquares) {
             if (board.getSquare(square).isOccupied()) {

@@ -12,20 +12,32 @@ public class SquarePaintComponent extends JComponent {
     }
     public SquarePaintComponent(Square square){
       this.square=square;
-      this.setBorder(BorderFactory.createEmptyBorder());
     }
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (this.square.getColor() == Color_Piece.WHITE) {
-            g.setColor(new Color(221,192,127));
-        } else {
-            g.setColor(new Color(101,67,33));
-        }
-        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+//    public void paintComponent(Graphics g) {
+////        super.paintComponent(g);
+//        if (this.square.getColor() == Color_Piece.WHITE) {
+//            g.setColor(new Color(221,192,127));
+//        } else {
+//            g.setColor(new Color(101,67,33));
+//        }
+//        g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+//        if (square.getOccupyingPiece() != null && this.square.getDispPiece()) {
+//            PieceDraw pd = new PieceDraw(square.getOccupyingPiece());
+//            pd.draw(g, getWidth(), getHeight());
+//        }
+//  }
+public void paintComponent(Graphics g) {
+    super.paintComponent(g);
 
-        if (square.getOccupyingPiece() != null && this.square.getDispPiece()) {
-            PieceDraw pd = new PieceDraw(square.getOccupyingPiece());
-            pd.draw(g, getWidth(), getHeight());
-        }
+    if (square.getColor() == Color_Piece.WHITE) {
+        g.setColor(new Color(221,192,127));
+    } else {
+        g.setColor(new Color(101,67,33));
     }
+    g.fillRect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
+
+    if(square.getOccupyingPiece() != null && square.getDispPiece()) {
+        new PieceDraw(square.getOccupyingPiece()).draw(g,this.getX(),this.getY());
+    }
+}
 }

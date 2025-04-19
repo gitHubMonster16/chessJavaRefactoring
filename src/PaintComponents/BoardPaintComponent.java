@@ -28,7 +28,7 @@ public class BoardPaintComponent extends JPanel {
             if ((currPiece.getColor() == Color_Piece.WHITE && whiteTurn)
                     || (currPiece.getColor() == Color_Piece.BLACK && !whiteTurn)) {
                 final Image i = currPiece.getImage();
-                g.drawImage(i, this.board.getCurrY(), board.getCurrY(), null);
+                g.drawImage(i, this.board.getCurrX(), board.getCurrY(), null);
             }
         }
     }
